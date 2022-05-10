@@ -9,12 +9,12 @@ class Model(nn.Module):
         model = list(model.children())[:-2]
         model.append(nn.AdaptiveAvgPool2d(7))
         
-
+        self.relu = nn.ReLU()
         self.model = nn.Sequential(*model)
         self.pred = nn.Conv2d(1, 4, 1)
 
     def forward(self, x):
         x = torch.mean(self.model(x), dim=1, keepdim=True)
-        x = self.pred(x)
+        x = self.relu(self.pred(x))
         return x
         
