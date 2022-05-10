@@ -14,6 +14,5 @@ def loss_fn(preds, labels):
     avg_loss = 0
     for i in losses:
         avg_loss += i
-    avg_loss /= len(losses)
 
     return avg_loss
