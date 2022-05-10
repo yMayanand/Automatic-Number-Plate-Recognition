@@ -11,10 +11,10 @@ class Model(nn.Module):
         
         self.relu = nn.ReLU()
         self.model = nn.Sequential(*model)
-        self.pred = nn.Conv2d(1, 4, 1)
+        self.pred = nn.Conv2d(512, 4, 1)
 
     def forward(self, x):
-        x = torch.mean(self.model(x), dim=1, keepdim=True)
+        x = self.model(x)
         x = self.relu(self.pred(x))
         return x
         
