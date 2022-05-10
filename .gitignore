@@ -1,0 +1,8 @@
+# ignore jupyter notebook files
+*.ipynb
+
+# ignore data directory
+data
+
+# ignore bytecode files
+*.pyc
