@@ -3,9 +3,9 @@ import torch.nn as nn
 from torchvision import models
 
 class Model(nn.Module):
-    def __init__(self):
+    def __init__(self, pretrained=False):
         super().__init__()
-        model = models.resnet18()
+        model = models.resnet18(pretrained=pretrained)
         model = list(model.children())[:-1]
         model.append(nn.AdaptiveAvgPool2d(7))
         
