@@ -15,6 +15,6 @@ class Model(nn.Module):
 
     def forward(self, x):
         x = self.model(x)
-        x = self.relu(self.pred(x))
+        x = torch.sigmoid(self.pred(x))
         return x
         
