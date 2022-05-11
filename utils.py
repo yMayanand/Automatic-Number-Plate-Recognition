@@ -57,7 +57,7 @@ def normal2cxcywh(bbox, size):
 def assign_cell(bbox, grid_size=(7, 7)):
     cx, cy, _, _, _ = bbox
     w, h = grid_size
-    global device
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     base_h = torch.tensor([1 / h]).to(device)
     base_w = torch.tensor(1 / w).to(device)
     px = torch.div(cx , base_w, rounding_mode='floor')
