@@ -11,7 +11,7 @@ class Model(nn.Module):
         
         self.relu = nn.ReLU()
         self.model = nn.Sequential(*model)
-        self.pred = nn.Conv2d(512, 4, 1)
+        self.pred = nn.Conv2d(512, 5, 1)
 
     def forward(self, x):
         x = self.model(x)

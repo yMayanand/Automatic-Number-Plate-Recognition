@@ -1,8 +1,9 @@
+from numpy import object0
 import torch
 from torch.utils import data
 import pandas as pd
 import cv2
-from utils import extract_bbox, resize_tfms
+from utils import extract_bbox, resize_tfms, assign_cell
 
 df = pd.read_csv('./metadata.csv')
 
@@ -35,4 +36,9 @@ class ANPR(data.Dataset):
             im, bbox = resize_tfms(im, bbox, size,
                                      new_size=self.resize)
         bbox = torch.tensor(bbox)
-        return im, bbox
+        objectness = torch.tensor([1.])
+        gt = torch.cat([bbox, objectness])
+        i, j = assign_cell(bbox)
+        p = torch.zeros(5, 7, 7)
+        p[:, i, j] = gt
+        return im, p

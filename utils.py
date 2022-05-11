@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-from torch import normal
+import torch
 from torchvision import transforms
 
 # function to get bounding box from xml file
@@ -59,8 +59,8 @@ def assign_cell(bbox, grid_size=(7, 7)):
     w, h = grid_size
     base_h = 1 / h
     base_w = 1 / w
-    px = cx // base_w
-    py = cy // base_h
+    px = torch.div(cx ,base_w, rounding_mode='floor')
+    py = torch.div(cy, base_h, rounding_mode='floor')
     if px >= w:
         px = w - 1
 
