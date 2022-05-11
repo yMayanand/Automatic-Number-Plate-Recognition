@@ -1,7 +1,6 @@
 import xml.etree.ElementTree as ET
 import torch
 from torchvision import transforms
-from zmq import device
 
 # function to get bounding box from xml file
 def extract_bbox(path):
