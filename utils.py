@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import torch
 from torchvision import transforms
+from zmq import device
 
 # function to get bounding box from xml file
 def extract_bbox(path):
@@ -57,9 +58,10 @@ def normal2cxcywh(bbox, size):
 def assign_cell(bbox, grid_size=(7, 7)):
     cx, cy, _, _, _ = bbox
     w, h = grid_size
-    base_h = 1 / h
-    base_w = 1 / w
-    px = torch.div(cx ,base_w, rounding_mode='floor')
+    global device
+    base_h = torch.tensor([1 / h]).to(device)
+    base_w = torch.tensor(1 / w).to(device)
+    px = torch.div(cx , base_w, rounding_mode='floor')
     py = torch.div(cy, base_h, rounding_mode='floor')
     px = int(px.item())
     py = int(py.item())

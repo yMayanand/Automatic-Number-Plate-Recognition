@@ -38,4 +38,4 @@ class ANPR(data.Dataset):
         bbox = torch.tensor(bbox)
         objectness = torch.tensor([1.])
         gt = torch.cat([bbox, objectness])
-        return im, gt
+        return im, gt,  
