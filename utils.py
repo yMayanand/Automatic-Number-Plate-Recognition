@@ -55,7 +55,7 @@ def normal2cxcywh(bbox, size):
 
 # function to assign bbox to a cell in final feature map
 def assign_cell(bbox, grid_size=(7, 7)):
-    cx, cy, _, _ = bbox
+    cx, cy, _, _, _ = bbox
     w, h = grid_size
     base_h = 1 / h
     base_w = 1 / w
