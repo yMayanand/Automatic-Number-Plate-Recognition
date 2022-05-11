@@ -4,12 +4,12 @@ from utils import assign_cell
 
 # function to compute loss
 
-def loss_fn(preds, labels):
+def loss_fn(preds, labels, alpha=0.):
     # bounding box loss
-    bbox_loss = F.mse_loss(preds[:, :4, :, :], labels[:, :4, :, :])
+    bbox_loss = (1 - alpha) * F.mse_loss(preds[:, :4, :, :], labels[:, :4, :, :])
 
     # objectness loss
-    object_loss = F.binary_cross_entropy(torch.sigmoid(preds[:, 4, :, :]), labels[:, 4, :, :])
+    object_loss = alpha * F.binary_cross_entropy(torch.sigmoid(preds[:, 4, :, :]), labels[:, 4, :, :])
     return bbox_loss + object_loss
 
 
