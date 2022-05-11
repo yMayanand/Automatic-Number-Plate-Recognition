@@ -38,7 +38,4 @@ class ANPR(data.Dataset):
         bbox = torch.tensor(bbox)
         objectness = torch.tensor([1.])
         gt = torch.cat([bbox, objectness])
-        i, j = assign_cell(bbox)
-        p = torch.zeros(5, 7, 7)
-        p[:, i, j] = gt
-        return im, p
+        return im, gt
