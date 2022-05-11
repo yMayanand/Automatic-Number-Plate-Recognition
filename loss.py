@@ -13,12 +13,13 @@ from utils import assign_cell
     return bbox_loss + object_loss"""
 
 
-def loss_fn(preds, labels, alpha=1, beta=1):
+def loss_fn(preds, labels):
     # bbox loss
     loss = 0
     for i, label in enumerate(labels):
         pos = assign_cell(label)
         a, b = pos
         loss1 = F.mse_loss(preds[i, :, a, b], label)
+        loss += loss1
 
     return loss
