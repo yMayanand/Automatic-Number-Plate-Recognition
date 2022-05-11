@@ -16,10 +16,14 @@ from utils import assign_cell
 def loss_fn(preds, labels):
     # bbox loss
     loss = 0
+    count = 0
     for i, label in enumerate(labels):
         pos = assign_cell(label)
         a, b = pos
         loss1 = F.mse_loss(preds[i, :4, a, b], label[:4])
         loss2 = F.binary_cross_entropy(torch.sigmoid(preds[i, 4, a, b]), label[4])
+        print(f"loss1 : {loss1} loss2: {loss2}")
         loss += loss1 + loss2
-    return loss
+        count += 1
+
+    return loss/count
