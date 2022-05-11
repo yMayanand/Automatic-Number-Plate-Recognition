@@ -20,6 +20,6 @@ def loss_fn(preds, labels):
         pos = assign_cell(label)
         a, b = pos
         loss1 = F.mse_loss(preds[i, :4, a, b], label[:4])
-        loss2 = F.binary_cross_entropy(preds[i, 4, a, b], label[4])
+        loss2 = F.binary_cross_entropy(torch.sigmoid(preds[i, 4, a, b]), label[4])
         loss += loss1 + loss2
     return loss
