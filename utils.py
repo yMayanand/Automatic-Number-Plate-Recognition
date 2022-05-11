@@ -61,12 +61,14 @@ def assign_cell(bbox, grid_size=(7, 7)):
     base_w = 1 / w
     px = torch.div(cx ,base_w, rounding_mode='floor')
     py = torch.div(cy, base_h, rounding_mode='floor')
+    px = int(px.item())
+    py = int(py.item())
     if px >= w:
         px = w - 1
 
     if py >= h:
         py = h - 1
-    return (int(py.item()), int(px.item()))
+    return (px, py)
 
     
 
