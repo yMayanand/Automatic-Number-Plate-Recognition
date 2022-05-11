@@ -59,7 +59,7 @@ def assign_cell(bbox, grid_size=(7, 7)):
     w, h = grid_size
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     base_h = torch.tensor([1 / h]).to(device)
-    base_w = torch.tensor(1 / w).to(device)
+    base_w = torch.tensor([1 / w]).to(device)
     px = torch.div(cx , base_w, rounding_mode='floor')
     py = torch.div(cy, base_h, rounding_mode='floor')
     px = int(px.item())
