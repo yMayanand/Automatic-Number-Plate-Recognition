@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 from utils import assign_cell
+import torch.nn as nn
 
 # function to compute loss
 
@@ -12,6 +13,7 @@ from utils import assign_cell
     object_loss = alpha * F.binary_cross_entropy(torch.sigmoid(preds[:, 4, :, :]), labels[:, 4, :, :])
     return bbox_loss + object_loss"""
 
+criterion = nn.SmoothL1Loss()
 
 def loss_fn(preds, labels):
     # bbox loss
@@ -19,7 +21,7 @@ def loss_fn(preds, labels):
     for i, label in enumerate(labels):
         pos = assign_cell(label)
         a, b = pos
-        loss1 = F.mse_loss(preds[i, :, a, b], label)
+        loss1 = criterion(preds[i, :, a, b], label)
         loss += loss1
 
     return loss
