@@ -69,7 +69,7 @@ def assign_cell(bbox, grid_size=(7, 7)):
 
     if py >= h:
         py = h - 1
-    return (px, py)
+    return (py, px)
 
     
 
