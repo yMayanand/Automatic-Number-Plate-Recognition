@@ -13,8 +13,8 @@ import torch.nn as nn
     object_loss = alpha * F.binary_cross_entropy(torch.sigmoid(preds[:, 4, :, :]), labels[:, 4, :, :])
     return bbox_loss + object_loss"""
 
-criterion1 = nn.SmoothL1Loss(reduction='none')
-criterion2 = nn.CrossEntropyLoss(weight=torch.tensor([0., 48.]), reduction='none')
+criterion1 = nn.SmoothL1Loss()
+criterion2 = nn.CrossEntropyLoss(weight=torch.tensor([0., 48.]))
 
 def loss_fn(preds, labels):
     # bbox loss
@@ -28,6 +28,6 @@ def loss_fn(preds, labels):
         temp[:, a, b] = torch.tensor([1])
         loss2 = criterion2(preds[i, 4:, :, :].reshape(2, 49).permute(1, 0), temp.reshape(-1))
         #conf = criterion2(torch.sigmoid(preds[i, 4, a, b]), label[4])
-        loss += obj + loss
+        loss += obj + loss2
 
     return loss.mean(dim=0)
