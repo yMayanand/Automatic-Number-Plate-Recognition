@@ -24,6 +24,6 @@ def loss_fn(preds, labels):
         a, b = pos
         loss1 = criterion1(preds[i, :4, a, b], label[:4])
         loss2 = criterion2(torch.sigmoid(preds[i, 4, a, b]), label[4])
-        loss += loss1
+        loss += loss1 + loss2
 
-    return loss
+    return loss.mean(dim=0)
