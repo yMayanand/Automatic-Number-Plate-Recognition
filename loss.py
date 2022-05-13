@@ -24,10 +24,11 @@ def loss_fn(preds, labels):
         pos = assign_cell(label)
         a, b = pos
         obj = criterion1(preds[i, :4, a, b], label[:4])
-        temp = torch.zeros(1, 7, 7, dtype=torch.long).to(device=device)
+        temp = torch.zeros(1, 7, 7, dtype=torch.long).to(device)
         temp[:, a, b] = torch.tensor([1]).to(device)
+        print(temp.device)
         loss2 = criterion2(preds[i, 4:, :, :].reshape(2, 49).permute(1, 0), temp.reshape(-1))
         #conf = criterion2(torch.sigmoid(preds[i, 4, a, b]), label[4])
         loss += obj + loss2
 
-    return loss.mean(dim=0)
+    return loss
