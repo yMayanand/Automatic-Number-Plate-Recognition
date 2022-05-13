@@ -23,7 +23,7 @@ def loss_fn(preds, labels):
         pos = assign_cell(label)
         a, b = pos
         loss1 = criterion1(preds[i, :4, a, b], label[:4])
-        loss2 = criterion2(preds[i, 4, a, b], label[4])
+        loss2 = criterion2(torch.sigmoid(preds[i, 4, a, b]), label[4])
         loss += loss1
 
     return loss
