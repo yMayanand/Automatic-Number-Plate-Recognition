@@ -27,7 +27,9 @@ def loss_fn(preds, labels):
         temp = torch.zeros(1, 7, 7, dtype=torch.long).to(device)
         temp[:, a, b] = torch.tensor([1]).to(device)
         print(temp.device)
-        loss2 = criterion2(preds[i, 4:, :, :].reshape(2, 49).permute(1, 0), temp.reshape(-1))
+        temp1 = preds[i, 4:, :, :].reshape(2, 49).permute(1, 0).to(device)
+        temp2 = temp.reshape(-1).to(device)
+        loss2 = criterion2(temp1, temp2)
         #conf = criterion2(torch.sigmoid(preds[i, 4, a, b]), label[4])
         loss += obj + loss2
 
