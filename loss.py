@@ -14,7 +14,7 @@ import torch.nn as nn
     return bbox_loss + object_loss"""
 
 criterion1 = nn.SmoothL1Loss(reduction='none')
-criterion2 = nn.CrossEntropyLoss(reduction='none')
+criterion2 = nn.BCELoss(reduction='none')
 
 def loss_fn(preds, labels):
     # bbox loss
