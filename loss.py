@@ -5,14 +5,6 @@ import torch.nn as nn
 
 # function to compute loss
 
-"""def loss_fn(preds, labels, alpha=0.):
-    # bounding box loss
-    bbox_loss = (1 - alpha) * F.mse_loss(preds[:, :4, :, :], labels[:, :4, :, :])
-
-    # objectness loss
-    object_loss = alpha * F.binary_cross_entropy(torch.sigmoid(preds[:, 4, :, :]), labels[:, 4, :, :])
-    return bbox_loss + object_loss"""
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 criterion1 = nn.SmoothL1Loss(reduction='none')
 criterion2 = nn.BCELoss()
@@ -31,3 +23,15 @@ def loss_fn(preds, labels):
         loss += obj + conf
 
     return loss.mean(dim=0)
+
+class DetectionLoss(nn.Module):
+    def __init__(self, ):
+        super().__init__()
+        self.ce_loss = nn.BCEWithLogitsLoss(reduction='none')
+        self.mse_loss = nn.MSELoss(reduction='none')
+
+    def forward(self, ploc, plabel, gloc, glabel):
+        self.loc_loss = self.mse_loss(ploc, gloc)
+        self.conf_loss = self.ce_loss(plabel, glabel)
+        total_loss = self.loc_loss + (0.5 * self.conf_loss)
+        return total_loss
